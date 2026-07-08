@@ -8,31 +8,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F3EFE7;
-  --card:#FBF8F2;
-  --card2:#F6F1E9;
-  --ink:#5B5147;
-  --sub:#A2947F;
-  --faint:#C4B8A6;
-  --coral:#E08B6D;
-  --coral-deep:#D0765A;
-  --coral-soft:#F7E0D5;
-  --tea:#BF9E77;
-  --tea-soft:#EFE3D2;
-  --green:#93AE8C;
-  --green-soft:#E4EBDF;
-  --amber:#DFA94F;
-  --amber-soft:#F7EAD0;
-  --red:#D9705B;
-  --red-soft:#F6DAD2;
-  --purple:#A493C0;
-  --purple-soft:#E9E3F2;
-  --blue:#8FA9C0;
-  --blue-soft:#E0E8EF;
-  --sh-out:7px 7px 16px rgba(184,167,142,.28), -7px -7px 16px rgba(255,255,255,.95);
-  --sh-out-sm:4px 4px 10px rgba(184,167,142,.25), -4px -4px 10px rgba(255,255,255,.9);
-  --sh-in:inset 4px 4px 9px rgba(184,167,142,.28), inset -4px -4px 9px rgba(255,255,255,.95);
-  --r-lg:26px; --r-md:20px; --r-sm:14px;
+  --bg:#FAF9F7;
+  --card:#FFFFFF;
+  --card2:#F5F3F0;
+  --ink:#28241F;
+  --sub:#9C9691;
+  --faint:#C6C1BA;
+  --line:#F0EDE8;
+  --coral:#E56A45;
+  --coral-deep:#D95B39;
+  --coral-soft:#FBEAE3;
+  --tea:#B9A489;
+  --tea-soft:#F6F0E8;
+  --green:#7FA37A;
+  --green-soft:#E9EFE6;
+  --amber:#D9A248;
+  --amber-soft:#F8EDD8;
+  --red:#D9553B;
+  --red-soft:#FAE4DE;
+  --purple:#9C89BD;
+  --purple-soft:#EEE9F4;
+  --blue:#7E9BB5;
+  --blue-soft:#E5EBF1;
+  --sh-out:0 1px 4px rgba(60,45,30,.05);
+  --sh-out-sm:0 1px 2px rgba(60,45,30,.04);
+  --sh-in:none;
+  --r-lg:18px; --r-md:16px; --r-sm:12px;
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;}
@@ -300,6 +301,72 @@ body{
 .page.show{display:block;}
 @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 .hide{display:none !important;}
+
+/* ===== 新版 UI 覆寫（大人手冊風格）===== */
+#app{padding-bottom:130px;}
+.app-title{font-size:21px;letter-spacing:2px;}
+.sync-pill{background:#fff;border:1px solid var(--line);box-shadow:none;}
+.search-input{background:#F1EFEB;box-shadow:none;}
+.sec-title{font-size:12.5px;font-weight:700;color:#8A857E;letter-spacing:5px;margin:24px 2px 10px;}
+.sec-title .dot{display:none;}
+.chip{background:#fff;border:1px solid var(--line);box-shadow:none;color:#6F6A64;}
+.chip.active{background:var(--coral);border-color:var(--coral);color:#fff;box-shadow:none;}
+.card-grid{grid-template-columns:1fr;gap:10px;}
+.item-card{background:#fff;border:1px solid var(--line);box-shadow:none;border-radius:16px;padding:14px 16px;gap:0;}
+.ic-row{display:flex;align-items:center;gap:13px;}
+.ic-icon{width:42px;height:42px;border-radius:12px;background:var(--coral-soft) !important;color:var(--coral) !important;box-shadow:none;flex:0 0 auto;}
+.ic-icon svg{width:23px;height:23px;}
+.ic-body{flex:1;min-width:0;}
+.ic-name{font-size:15px;margin:0;}
+.ic-sub{font-size:11.5px;color:var(--sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ic-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;}
+.ic-qty{margin:0;}
+.ic-qty b{font-size:18px;}
+.ic-actions{margin-top:12px;padding-top:11px;border-top:1px solid #F5F2EE;}
+.mini-btn{padding:9px 0;}
+.mini-btn.use{background:#F5F3F0;box-shadow:none;color:#6F6A64;}
+.mini-btn.buy{background:var(--coral-soft);box-shadow:none;color:var(--coral-deep);}
+.recent-card{background:#fff;border:1px solid var(--line);box-shadow:none;border-radius:14px;}
+.cat-grid{gap:12px;}
+.cat-card{background:#fff;border:1px solid var(--line);box-shadow:none;border-radius:16px;align-items:stretch;padding:16px;gap:5px;text-align:left;}
+.cc-top{display:flex;align-items:flex-start;justify-content:space-between;}
+.cat-card .cc-icon{width:44px;height:44px;border-radius:12px;background:var(--coral-soft);color:var(--coral);box-shadow:none;}
+.cat-card .cc-icon svg{width:24px;height:24px;}
+.cat-card .cc-name{font-size:15px;margin-top:8px;}
+.cat-card .cc-cnt{font-size:11px;}
+.cc-sub{font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.form-card,.rec-item,.dt-stat{background:#fff;border:1px solid var(--line);box-shadow:none;}
+.f-input,.f-textarea,.stepper,.toggle-row,.seg{background:#F5F3F0;box-shadow:none;}
+.stepper button{background:#fff;border:1px solid var(--line);box-shadow:none;}
+.seg button.active{background:#fff;box-shadow:0 1px 3px rgba(60,45,30,.08);}
+.icon-cell{background:#F5F3F0;box-shadow:none;}
+.icon-cell.active{background:var(--coral-soft);box-shadow:none;}
+.cat-chip{background:#F5F3F0;box-shadow:none;}
+.cat-chip.active{background:var(--ink);box-shadow:none;}
+.btn-main{box-shadow:none;border-radius:14px;letter-spacing:3px;}
+.btn-ghost{background:#F5F3F0;box-shadow:none;border-radius:14px;color:#6F6A64;}
+.m-cancel,.big-btn.use,.quick-qty button,.tool-btn{background:#F5F3F0;box-shadow:none;}
+.m-ok,.m-ok.danger,.big-btn.buy{box-shadow:none;}
+.quick-qty button.active{background:var(--coral-soft);box-shadow:none;}
+.ri-icon,.dt-icon{background:var(--coral-soft) !important;color:var(--coral) !important;box-shadow:none;}
+.sheet,.modal{background:#FCFBFA;}
+.hist-table th{border-bottom:1px solid var(--line);}
+.hist-table td{border-bottom:1px solid #F5F2EE;}
+.pf-row{border-bottom:1px solid var(--line);}
+.bottom-nav{bottom:10px;width:calc(100% - 24px);max-width:456px;border-radius:32px;background:#fff;
+  border:1px solid var(--line);box-shadow:0 8px 28px rgba(60,40,20,.10);padding:8px 10px;backdrop-filter:none;}
+.nav-btn{color:#2E2A25;padding:9px 20px;border-radius:24px;width:auto;font-size:10.5px;transition:background .15s;}
+.nav-btn.active{background:#F3F0EC;color:var(--coral-deep);}
+.nav-add{box-shadow:none;width:50px;height:50px;margin-top:-20px;}
+#toast{background:#3A352F;}
+/* 懸浮新增按鈕 */
+.fab{position:fixed;z-index:45;right:max(18px,calc(50% - 222px));bottom:96px;width:56px;height:56px;
+  border-radius:50%;border:none;background:var(--coral);color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px rgba(217,91,57,.35);transition:transform .1s;}
+.fab:active{transform:scale(.93);}
+.fab svg{width:26px;height:26px;}
+.nav-btn{flex:1;}
 </style>
 </head>
 <body>
@@ -311,7 +378,7 @@ body{
       <div class="app-title">家裡還有嗎<span class="q">？</span></div>
       <div class="app-sub" id="headerSub">我們的生活備品小帳本</div>
     </div>
-    <div class="sync-pill" id="syncPill" onclick="go('profile')">
+    <div class="sync-pill" id="syncPill" onclick="openSettingsModal()">
       <span class="sync-dot" id="syncDot"></span><span id="syncText">本機模式</span>
     </div>
   </header>
@@ -333,7 +400,7 @@ body{
 
   <!-- ============ CATEGORIES ============ -->
   <section class="page" id="page-cats">
-    <div class="sec-title"><span class="dot"></span>分類總覽</div>
+    <div class="sec-title">分類總覽</div>
     <div class="cat-grid" id="catGrid"></div>
   </section>
 
@@ -397,8 +464,6 @@ body{
     <div class="rec-list" id="recList"></div>
   </section>
 
-  <!-- ============ PROFILE ============ -->
-  <section class="page" id="page-profile"><div id="profileBody"></div></section>
 </div>
 
 <!-- bottom nav -->
@@ -409,16 +474,13 @@ body{
   <button class="nav-btn" data-page="cats" onclick="go('cats')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="7" height="7" rx="2.5"/><rect x="13" y="4" width="7" height="7" rx="3.5"/><rect x="4" y="13" width="7" height="7" rx="2.5"/><rect x="13" y="13" width="7" height="7" rx="2.5"/></svg>分類
   </button>
-  <button class="nav-add" onclick="go('add')" aria-label="新增">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-  </button>
   <button class="nav-btn" data-page="records" onclick="go('records')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="3"/><path d="M9 8.5h6M9 12h6M9 15.5h3.5"/></svg>紀錄
   </button>
-  <button class="nav-btn" data-page="profile" onclick="go('profile')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5"/></svg>我的
-  </button>
 </nav>
+<button class="fab" onclick="go('add')" aria-label="新增">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+</button>
 
 <!-- detail sheet -->
 <div class="sheet-mask" id="sheetMask" onclick="closeDetail()"></div>
@@ -650,7 +712,6 @@ function renderAll(){
   if(currentPage==='home')renderHome();
   if(currentPage==='cats')renderCats();
   if(currentPage==='records')renderRecords();
-  if(currentPage==='profile')renderProfile();
   if(detailId)renderDetail();
 }
 function renderSyncPill(){
@@ -672,7 +733,9 @@ function counts(){
 }
 function renderHome(){
   const c=counts();
-  $('filterChips').innerHTML=FILTERS.map(f=>{
+  const catChip=activeFilter.startsWith('cat:')
+    ?`<button class="chip active" onclick="setFilter('all')">${esc(activeFilter.slice(4))} ✕</button>`:'';
+  $('filterChips').innerHTML=catChip+FILTERS.map(f=>{
     const n=f.id==='all'?state.items.length:(c[f.id]??null);
     return `<button class="chip ${activeFilter===f.id?'active':''}" onclick="setFilter('${f.id}')">${f.label}${n!==null&&n!==undefined?`<span class="cnt">${n}</span>`:''}</button>`;
   }).join('');
@@ -716,19 +779,20 @@ function renderHome(){
 }
 function emptyHTML(t,s){return `<div class="empty">${t}<br><span style="font-size:12px">${s}</span></div>`;}
 function cardHTML(it){
-  const st=itemStatus(it),m=catMeta(it.category);
+  const st=itemStatus(it);
   const last=lastPurchase(it.id);
   return `<div class="item-card" onclick="openDetail('${it.id}')">
-    <div class="ic-top">
-      <div class="ic-icon" style="background:${m.bg};color:${m.c}">${iconSvg(it.icon)}</div>
-      ${STATUS_BADGE[st]}
+    <div class="ic-row">
+      <div class="ic-icon">${iconSvg(it.icon)}</div>
+      <div class="ic-body">
+        <div class="ic-name">${esc(it.name)}</div>
+        <div class="ic-sub">${esc(it.category)}・最近購買 ${last?fmtDate(last.purchaseDate):'—'}</div>
+      </div>
+      <div class="ic-right">
+        <div class="ic-qty ${st==='out'?'zero':st==='low'?'warn':''}"><b>${it.currentQuantity??0}</b><span>${esc(it.unit||'')}</span></div>
+        ${STATUS_BADGE[st]}
+      </div>
     </div>
-    <div>
-      <div class="ic-name">${esc(it.name)}</div>
-      <div class="ic-cat">${esc(it.category)}</div>
-    </div>
-    <div class="ic-qty ${st==='out'?'zero':st==='low'?'warn':''}"><b>${it.currentQuantity??0}</b><span>${esc(it.unit||'')}</span></div>
-    <div class="ic-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>最近購買 ${last?fmtDate(last.purchaseDate):'—'}</div>
     <div class="ic-actions">
       <button class="mini-btn use" onclick="event.stopPropagation();openUseModal('${it.id}')">用掉了</button>
       <button class="mini-btn buy" onclick="event.stopPropagation();openBuyModal('${it.id}')">補貨</button>
@@ -745,17 +809,18 @@ function clearSearch(){$('searchInput').value='';onSearch();}
 /* ================= categories page ================= */
 function renderCats(){
   $('catGrid').innerHTML=CAT_NAMES.map(c=>{
-    const m=CATS[c],n=state.items.filter(i=>i.category===c).length;
+    const items=state.items.filter(i=>i.category===c);
+    const names=items.slice(0,3).map(i=>esc(i.name)).join('、');
     return `<div class="cat-card" onclick="filterByCat('${c}')">
-      <div class="cc-icon" style="background:${m.bg};color:${m.c}">${iconSvg(m.icon)}</div>
-      <div class="cc-name">${c}</div><div class="cc-cnt">${n} 個品項</div></div>`;
+      <div class="cc-top"><div class="cc-icon">${iconSvg(CATS[c].icon)}</div><span class="cc-cnt">${items.length} 項</span></div>
+      <div class="cc-name">${c}</div>
+      <div class="cc-sub">${names||'尚無品項'}</div></div>`;
   }).join('');
 }
-function filterByCat(c){activeFilter='cat:'+c;searchQ='';$('searchInput').value='';go('home');
-  // add temp chip highlight
-  $('filterChips').insertAdjacentHTML('afterbegin',`<button class="chip active" onclick="setFilter('all')">${iconChipCat(c)} ✕</button>`);
+function filterByCat(c){
+  activeFilter='cat:'+c;searchQ='';$('searchInput').value='';
+  go('home');
 }
-function iconChipCat(c){return esc(c);}
 
 /* ================= add / edit form ================= */
 let fCat='洗衣清潔', fIcon='bottle';
@@ -976,44 +1041,29 @@ service cloud.firestore {
     }
   }
 }`;
-function renderProfile(){
+function openSettingsModal(){
   const cloud=mode==='cloud';
   const name=localStorage.getItem('hyh_username')||'';
-  let html='';
-  html+=`<div class="pf-card"><div class="pf-user">
-    <div class="pf-ava">${name?esc(name[0]):iconSvg('heart')}</div>
-    <div><div class="pf-name">${esc(name||'還沒取名字')}</div>
-    <div class="pf-mail">${cloud?'雲端同步版・和另一半共用同一份清單':'本機模式・資料只存在這台裝置'}</div></div></div>
-    <div class="f-label" style="margin-top:16px">我的稱呼（用來記錄是誰補貨、誰用掉）</div>
-    <div class="f-row"><input class="f-input" id="pfName" value="${esc(name)}" maxlength="10" placeholder="例如：阿倫">
-    <button class="btn-ghost" style="margin:0;flex:0 0 92px" onclick="savePfName()">儲存</button></div></div>`;
-  if(cloud){
-    html+=`<div class="pf-card">
-      <div class="sec-title" style="margin:0 0 4px"><span class="dot" style="background:var(--green)"></span>同步狀態</div>
-      <div class="pf-row"><span class="k">即時同步</span><span class="v" style="color:#6E8A66">${CloudDB.ready?'已連線':'連線中'}</span></div>
-      <div class="pf-row"><span class="k">共用方式</span><span class="v">免登入</span></div>
-      <div class="hint">把這個網頁的網址傳給另一半，打開就能一起編輯，兩邊的改動會即時同步。</div>
-      <button class="btn-ghost" onclick="copyText(location.href)">複製網頁網址</button>
-    </div>`;
-  }else{
-    html+=`<div class="pf-card">
-      <div class="sec-title" style="margin:0 0 8px"><span class="dot"></span>開啟雲端共同編輯</div>
-      <div class="hint" style="margin-bottom:4px">目前是<b>本機模式</b>。連接 Firebase 後，這份清單會存到雲端，你和另一半打開同一個網址就能一起編輯。</div>
-      <button class="btn-main" onclick="openSetupModal()">連接 Firebase</button>
-    </div>
-    <div class="pf-card">
-      <div class="sec-title" style="margin:0 0 8px"><span class="dot" style="background:var(--tea)"></span>本機資料</div>
-      <button class="btn-ghost" style="margin-top:2px" onclick="if(confirm('確定要清空本機所有資料？')){localStorage.removeItem('hyh_items');localStorage.removeItem('hyh_purchases');localStorage.removeItem('hyh_usages');LocalDB.load();toast('已重設為範例資料');}">重設本機資料（載入範例）</button>
-    </div>`;
-  }
-  html+=`<div class="meta-line">家裡還有嗎？ v1.0・為我們兩個人做的小工具</div>`;
-  $('profileBody').innerHTML=html;
+  openModal(`
+    <div class="m-title">設定</div>
+    <div class="m-sub">${cloud?'雲端同步版・和另一半共用同一份清單':'本機模式・資料只存在這台裝置'}</div>
+    <div class="f-label">我的稱呼（記錄是誰補貨、誰用掉）</div>
+    <input class="f-input" id="pfName" value="${esc(name)}" maxlength="10" placeholder="例如：阿倫">
+    ${cloud?`
+    <div class="f-label">同步狀態</div>
+    <div class="pf-row" style="padding:6px 2px"><span class="k">即時同步</span><span class="v" style="color:#6E8A66">${CloudDB.ready?'已連線':'連線中'}</span></div>
+    <div class="hint">把這個網頁的網址傳給另一半，打開就能一起編輯。</div>
+    <button class="btn-ghost" onclick="copyText(location.href)">複製網頁網址</button>`
+    :`
+    <div class="hint" style="margin-top:14px">這是新版 UI 預覽，用本機範例資料試玩；確認喜歡後我會接回雲端並更新線上版。</div>
+    <button class="btn-ghost" onclick="if(confirm('確定要清空本機所有資料？')){localStorage.removeItem('hyh_items');localStorage.removeItem('hyh_purchases');localStorage.removeItem('hyh_usages');LocalDB.load();closeModal();toast('已重設為範例資料');}">重設本機資料（載入範例）</button>`}
+    <div class="m-btns"><button class="m-cancel" onclick="closeModal()">關閉</button><button class="m-ok" onclick="savePfName()">儲存</button></div>`);
 }
 function savePfName(){
   const n=$('pfName').value.trim();
   if(!n){toast('輸入一個名字吧');return;}
   localStorage.setItem('hyh_username',n);
-  renderAll();toast('已更新稱呼');
+  closeModal();renderAll();toast('已更新稱呼');
 }
 function copyText(t){
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('已複製')).catch(()=>{
