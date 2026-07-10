@@ -359,6 +359,8 @@ body{
 .nav-btn.active{background:#F3F0EC;color:var(--coral-deep);}
 .nav-add{box-shadow:none;width:50px;height:50px;margin-top:-20px;}
 #toast{background:#3A352F;}
+.f-input[type="date"]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;height:46px;line-height:1.3;}
+.badge.expd{background:var(--purple);color:#fff;}
 /* 懸浮新增按鈕 */
 .fab{position:fixed;z-index:45;right:max(18px,calc(50% - 222px));bottom:96px;width:56px;height:56px;
   border-radius:50%;border:none;background:var(--coral);color:#fff;cursor:pointer;
@@ -542,14 +544,15 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
 function daysUntil(dateStr){if(!dateStr)return Infinity;return Math.ceil((new Date(dateStr+'T00:00:00')-new Date())/(864e5));}
 
-/* item status: 'out' | 'low' | 'exp' | 'ok' */
+/* item status: 'expd' | 'out' | 'low' | 'exp' | 'ok' */
 function itemStatus(it){
+  if(it.expiryDate&&daysUntil(it.expiryDate)<0)return 'expd';
   if((it.currentQuantity??0)<=0)return 'out';
   if((it.currentQuantity??0)<=(it.lowStockThreshold??0))return 'low';
   if(it.expiryDate&&daysUntil(it.expiryDate)<=30)return 'exp';
   return 'ok';
 }
-const STATUS_BADGE={out:'<span class="badge out">需要補貨</span>',low:'<span class="badge low">快沒了</span>',exp:'<span class="badge exp">即將到期</span>',ok:'<span class="badge ok">充足</span>'};
+const STATUS_BADGE={expd:'<span class="badge expd">已過期</span>',out:'<span class="badge out">需要補貨</span>',low:'<span class="badge low">快沒了</span>',exp:'<span class="badge exp">即將到期</span>',ok:'<span class="badge ok">充足</span>'};
 
 /* ================= state ================= */
 let state={items:[],purchases:[],usages:[]};
@@ -709,10 +712,10 @@ function renderSyncPill(){
 /* ================= home ================= */
 const FILTERS=[
   {id:'all',label:'全部'},{id:'low',label:'快沒了'},{id:'out',label:'需要補貨'},
-  {id:'exp',label:'即將到期'},{id:'recent',label:'最近補貨'}
+  {id:'exp',label:'即將到期'},{id:'expd',label:'已過期'}
 ];
 function counts(){
-  const c={low:0,out:0,exp:0};
+  const c={low:0,out:0,exp:0,expd:0};
   state.items.forEach(i=>{const s=itemStatus(i);if(c[s]!==undefined)c[s]++;});
   return c;
 }
@@ -732,29 +735,15 @@ function renderHome(){
     if(activeFilter.startsWith('cat:'))list=list.filter(i=>i.category===activeFilter.slice(4));
     else if(activeFilter==='low')list=list.filter(i=>itemStatus(i)==='low');
     else if(activeFilter==='out')list=list.filter(i=>itemStatus(i)==='out');
-    else if(activeFilter==='exp')list=list.filter(i=>i.expiryDate&&daysUntil(i.expiryDate)<=30);
-    else if(activeFilter==='recent'){
-      const ids=[...state.purchases].sort((a,b)=>b.purchaseDate.localeCompare(a.purchaseDate)).map(p=>p.itemId);
-      list=list.filter(i=>ids.includes(i.id)).sort((a,b)=>ids.indexOf(a.id)-ids.indexOf(b.id));
-    }
+    else if(activeFilter==='exp')list=list.filter(i=>i.expiryDate&&daysUntil(i.expiryDate)>=0&&daysUntil(i.expiryDate)<=30);
+    else if(activeFilter==='expd')list=list.filter(i=>i.expiryDate&&daysUntil(i.expiryDate)<0);
     $('filteredGrid').innerHTML=list.map(cardHTML).join('');
     $('filteredEmpty').innerHTML=list.length?'':emptyHTML('找不到符合的備品','換個關鍵字或篩選看看');
   }else{
-    const need=state.items.filter(i=>['out','low'].includes(itemStatus(i)));
-    const recent=[...state.purchases].sort((a,b)=>(b.purchaseDate+b.createdAt).localeCompare(a.purchaseDate+a.createdAt)).slice(0,8);
+    const need=state.items.filter(i=>['out','low','expd'].includes(itemStatus(i)));
     let html='';
     if(need.length){
-      html+=`<div class="sec-title"><span class="dot" style="background:var(--amber)"></span>快沒了・該補貨</div><div class="card-grid">${need.map(cardHTML).join('')}</div>`;
-    }
-    if(recent.length){
-      html+=`<div class="sec-title"><span class="dot" style="background:var(--green)"></span>最近補貨</div><div class="recent-strip">${recent.map(r=>{
-        const it=state.items.find(i=>i.id===r.itemId);if(!it)return '';
-        const m=catMeta(it.category);
-        return `<div class="recent-card" onclick="openDetail('${it.id}')">
-          <div class="rc-name">${esc(it.name)}</div>
-          <div class="rc-info">${fmtDate(r.purchaseDate)}・+${r.quantity} ${esc(r.unit||it.unit)}</div>
-          ${r.note?`<div class="rc-note">${esc(r.note)}</div>`:''}</div>`;
-      }).join('')}</div>`;
+      html+=`<div class="sec-title"><span class="dot" style="background:var(--amber)"></span>需要注意</div><div class="card-grid">${need.map(cardHTML).join('')}</div>`;
     }
     html+=`<div class="sec-title"><span class="dot"></span>全部備品</div>`;
     html+=state.items.length?`<div class="card-grid">${[...state.items].sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant')).map(cardHTML).join('')}</div>`
@@ -771,7 +760,7 @@ function cardHTML(it){
       <div class="ic-icon">${iconSvg(catMeta(it.category).icon)}</div>
       <div class="ic-body">
         <div class="ic-name">${esc(it.name)}</div>
-        <div class="ic-sub">${esc(it.category)}・最近購買 ${last?fmtDate(last.purchaseDate):'—'}</div>
+        <div class="ic-sub">${esc(it.category)}・${last?'最近購買 '+fmtDate(last.purchaseDate):'尚未補貨'}</div>
       </div>
       <div class="ic-right">
         <div class="ic-qty ${st==='out'?'zero':st==='low'?'warn':''}"><b>${it.currentQuantity??0}</b><span>${esc(it.unit||'')}</span></div>
@@ -794,12 +783,10 @@ function clearSearch(){$('searchInput').value='';onSearch();}
 /* ================= categories page ================= */
 function renderCats(){
   $('catGrid').innerHTML=CAT_NAMES.map(c=>{
-    const items=state.items.filter(i=>i.category===c);
-    const names=items.slice(0,3).map(i=>esc(i.name)).join('、');
+    const n=state.items.filter(i=>i.category===c).length;
     return `<div class="cat-card" onclick="filterByCat('${c}')">
-      <div class="cc-top"><div class="cc-icon">${iconSvg(CATS[c].icon)}</div><span class="cc-cnt">${items.length} 項</span></div>
-      <div class="cc-name">${c}</div>
-      <div class="cc-sub">${names||'尚無品項'}</div></div>`;
+      <div class="cc-top"><div class="cc-icon">${iconSvg(CATS[c].icon)}</div><span class="cc-cnt">${n} 項</span></div>
+      <div class="cc-name">${c}</div></div>`;
   }).join('');
 }
 function filterByCat(c){
@@ -975,8 +962,8 @@ function renderDetail(){
     <div class="dt-stats">
       <div class="dt-stat"><div class="k">目前庫存</div><div class="v" style="color:${st==='out'?'var(--red)':st==='low'?'var(--amber)':'var(--ink)'}">${it.currentQuantity??0} <small>${esc(it.unit)}</small></div></div>
       <div class="dt-stat"><div class="k">最低提醒數量</div><div class="v">${it.lowStockThreshold??0} <small>${esc(it.unit)}</small></div></div>
-      <div class="dt-stat"><div class="k">最近購買</div><div class="v" style="font-size:15px">${lastPurchase(it.id)?fmtDate(lastPurchase(it.id).purchaseDate):'—'}</div></div>
-      <div class="dt-stat"><div class="k">到期日</div><div class="v" style="font-size:15px">${it.expiryDate?fmtDate(it.expiryDate)+(daysUntil(it.expiryDate)<=30?` <span class="badge exp">剩 ${Math.max(0,daysUntil(it.expiryDate))} 天</span>`:''):'未設定'}</div></div>
+      <div class="dt-stat"><div class="k">最近購買</div><div class="v" style="font-size:15px">${lastPurchase(it.id)?fmtDate(lastPurchase(it.id).purchaseDate):'尚未補貨'}</div></div>
+      <div class="dt-stat"><div class="k">到期日</div><div class="v" style="font-size:15px">${it.expiryDate?fmtDate(it.expiryDate)+(daysUntil(it.expiryDate)<0?' <span class="badge expd">已過期</span>':(daysUntil(it.expiryDate)<=30?` <span class="badge exp">剩 ${daysUntil(it.expiryDate)} 天</span>`:'')):'未設定'}</div></div>
     </div>
     ${it.note?`<div class="dt-note">${esc(it.note)}</div>`:''}
     <div class="dt-actions">
