@@ -412,8 +412,6 @@ body{
       <input class="f-input" id="fName" placeholder="例如：洗衣精" maxlength="30">
       <div class="f-label">分類 <span class="req">*</span></div>
       <div class="cat-chips" id="fCatChips"></div>
-      <div class="f-label">選一個 icon</div>
-      <div class="icon-grid" id="fIconGrid"></div>
       <div class="f-row" style="margin-top:4px">
         <div>
           <div class="f-label" id="fQtyLabel">初始數量</div>
@@ -496,42 +494,29 @@ body{
 <script>
 /* ================= icons ================= */
 const ICONS = {
-  bottle:'<path d="M9.5 3h5M10 3v3.2L8 9v9a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V9l-2-2.8V3" /><path d="M8.5 13h7"/>',
-  pump:'<path d="M9 21h6a2 2 0 0 0 2-2v-8a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v8a2 2 0 0 0 2 2Z"/><path d="M12 8V5h4M12 5h-1.5"/><path d="M10 14.5h4"/>',
-  tube:'<path d="M8 8.5 6.5 18a2.5 2.5 0 0 0 2.5 3h6a2.5 2.5 0 0 0 2.5-3L16 8.5Z"/><path d="M9 8.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v2.5"/><path d="M9.5 15h5"/>',
-  jar:'<rect x="6" y="8" width="12" height="13" rx="3"/><path d="M8 8V6a1.5 1.5 0 0 1 1.5-1.5h5A1.5 1.5 0 0 1 16 6v2"/><path d="M6 13h12"/>',
-  pill:'<rect x="3.5" y="9" width="17" height="7" rx="3.5" transform="rotate(-35 12 12.5)"/><path d="m9 8.7 5.5 7.9"/>',
-  vitamin:'<circle cx="9" cy="9" r="4.5"/><circle cx="16" cy="15.5" r="4"/><path d="M7.2 8.2c.6-.8 1.6-1.2 2.6-1"/>',
-  tp:'<rect x="4" y="6" width="13" height="12" rx="6"/><ellipse cx="17" cy="12" rx="3" ry="6"/><ellipse cx="17" cy="12" rx="1" ry="2.2"/>',
-  tissue:'<rect x="4" y="9" width="16" height="10" rx="3"/><path d="M10 9c1-2.5 3-2.5 4 0M12 9v4"/>',
-  spray:'<path d="M9 10h5v9a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2Z"/><path d="M10 10V7h3l3-2M13 7h-3"/><path d="M18.5 4.5h.01M19.5 7h.01M18.5 9.5h.01"/>',
-  soap:'<rect x="5" y="9" width="14" height="9" rx="4.5"/><path d="M9 6.5c0-1.5 2-1.5 2-3M14 13h1.5"/>',
-  brush:'<path d="M7 3.5h3v6H7zM8.5 9.5V21"/><path d="M7 4.5 5.5 4M7 6H5.5M7 7.5 5.5 8"/>',
-  sponge:'<rect x="4" y="7" width="16" height="10" rx="3"/><path d="M4 12h16M9 7v5M15 12v5"/>',
-  bag:'<path d="M6 8h12l-1 12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2Z"/><path d="M9 8V6.5A3 3 0 0 1 12 3.5a3 3 0 0 1 3 3V8"/>',
-  mask:'<path d="M4 10c0-1 .8-2 2-2h12c1.2 0 2 1 2 2v3c0 3-4 6-8 6s-8-3-8-6Z"/><path d="M4 9.5 2.5 9M4 12H2.5M20 9.5l1.5-.5M20 12h1.5M8 11.5h8M9 14.5h6"/>',
-  pad:'<rect x="5" y="7" width="14" height="10" rx="5"/><path d="M12 7v10M8.5 12h.01M15.5 12h.01"/>',
-  cotton:'<circle cx="12" cy="7" r="3"/><circle cx="12" cy="17" r="3"/><path d="M12 10v4"/>',
-  towel:'<path d="M6 4h12v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Z"/><path d="M6 8h12M10 4v4M14 4v4"/>',
-  cup:'<path d="M6 5h11v9a4.5 4.5 0 0 1-4.5 4.5h-2A4.5 4.5 0 0 1 6 14Z"/><path d="M17 7h1.5a2 2 0 0 1 0 4H17M8.5 21h6"/>',
-  leaf:'<path d="M5 19C5 9 12 4 19.5 4.5 20 12 15 19 5 19Z"/><path d="M5 19c3-5 6-8 10-10.5"/>',
-  heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.2 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z"/>',
-  box:'<path d="m4 8 8-4 8 4v8l-8 4-8-4Z"/><path d="m4 8 8 4 8-4M12 12v8"/>',
-  bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 3.5 10.9c-.7.5-1 1.3-1 2.1h-5c0-.8-.3-1.6-1-2.1A6 6 0 0 1 12 3Z"/>',
-  battery:'<rect x="3" y="8" width="15" height="8" rx="2.5"/><path d="M21 11v2M7 10.5v3M11 10.5v3"/>',
-  paw:'<circle cx="7.5" cy="9" r="1.8"/><circle cx="16.5" cy="9" r="1.8"/><circle cx="4.8" cy="13.5" r="1.6"/><circle cx="19.2" cy="13.5" r="1.6"/><path d="M12 12.5c2.6 0 4.5 2 4.5 4.1 0 1.5-1.2 2.4-2.4 2.1-.9-.2-1.4-.5-2.1-.5s-1.2.3-2.1.5c-1.2.3-2.4-.6-2.4-2.1 0-2.1 1.9-4.1 4.5-4.1Z"/>'
+  laundry:'<rect x="9.7" y="4.1" width="4.6" height="2.8" rx="0.9"/><rect x="6" y="6.9" width="12" height="13.6" rx="2.9"/><path d="M8.3 13.8c1.2-1 2.5-1 3.7 0s2.5 1 3.7 0"/>',
+  pump:'<svg viewBox="0.5 1.5 33 33" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7H22"/><path d="M17 7V10"/><path d="M14 10H20C22.761 10 25 12.239 25 15V25C25 27.209 23.209 29 21 29H13C10.791 29 9 27.209 9 25V15C9 12.239 11.239 10 14 10Z"/><path d="M14 19H20"/></svg>',
+  jar:'<rect x="6.5" y="9" width="11" height="11" rx="3"/><rect x="8" y="5.5" width="8" height="3.5" rx="1.5"/>',
+  capsule:'<rect x="4.8" y="8.9" width="14.4" height="6.2" rx="3.1" transform="rotate(-40 12 12)"/><path d="M12 8.9v6.2" transform="rotate(-40 12 12)"/>',
+  kitchen:'<path d="M3.5 11.5h11.5v2.3a3.2 3.2 0 0 1-3.2 3.2H6.7a3.2 3.2 0 0 1-3.2-3.2Z"/><path d="M15 13h5.5"/><path d="M7.2 7.8c0-.9.8-.9.8-1.8M10.4 7.8c0-.9.8-.9.8-1.8"/>',
+  tp:'<ellipse cx="12" cy="8" rx="6.4" ry="3.4"/><path d="M5.6 8v7.2c0 2 2.9 3.7 6.4 3.7s6.4-1.7 6.4-3.7V8"/><ellipse cx="12" cy="8" rx="2.3" ry="1.25"/>',
+  box:'<path d="m4.5 8.2 7.5-3.7 7.5 3.7v7.6l-7.5 3.7-7.5-3.7Z"/><path d="m4.5 8.2 7.5 3.6 7.5-3.6"/><path d="M12 11.8v7.7"/>'
 };
-function iconSvg(id,cls){const p=ICONS[id]||ICONS.box;return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;}
+function iconSvg(id,cls){
+  const p=ICONS[id]||ICONS.box;
+  if(p.startsWith('<svg'))return p.replace('<svg',`<svg class="${cls||''}"`);
+  return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+}
 
 /* ================= categories ================= */
 const CATS = {
-  '洗衣清潔':{icon:'bottle', c:'#8FA9C0', bg:'#E0E8EF'},
-  '浴室用品':{icon:'pump',   c:'#7FB5AE', bg:'#DDECE9'},
-  '身體保養':{icon:'heart',  c:'#DE9A9A', bg:'#F6E3E3'},
-  '保健食品':{icon:'vitamin',c:'#D9A661', bg:'#F5E8D3'},
-  '廚房用品':{icon:'sponge', c:'#A0B579', bg:'#E8EDDA'},
-  '紙品耗材':{icon:'tp',     c:'#B79ACD', bg:'#EBE2F2'},
-  '其他':    {icon:'box',    c:'#A2947F', bg:'#ECE5D8'}
+  '洗衣清潔':{icon:'laundry', c:'#8FA9C0', bg:'#E0E8EF'},
+  '浴室用品':{icon:'pump',    c:'#7FB5AE', bg:'#DDECE9'},
+  '身體保養':{icon:'jar',     c:'#DE9A9A', bg:'#F6E3E3'},
+  '保健食品':{icon:'capsule', c:'#D9A661', bg:'#F5E8D3'},
+  '廚房用品':{icon:'kitchen', c:'#A0B579', bg:'#E8EDDA'},
+  '紙品耗材':{icon:'tp',      c:'#B79ACD', bg:'#EBE2F2'},
+  '其他':    {icon:'box',     c:'#A2947F', bg:'#ECE5D8'}
 };
 const CAT_NAMES = Object.keys(CATS);
 function catMeta(c){return CATS[c]||CATS['其他'];}
@@ -606,12 +591,12 @@ const LocalDB={
 
 function seedDemo(){
   const mk=(name,cat,icon,qty,unit,low,note,expiry)=>({id:uid(),name,category:cat,icon,currentQuantity:qty,unit,lowStockThreshold:low,note:note||'',expiryDate:expiry||'',createdBy:'我',updatedBy:'我',createdAt:nowISO(),updatedAt:nowISO()});
-  const a=mk('洗衣精','洗衣清潔','bottle',2,'瓶',1,'常用：藍色那罐');
+  const a=mk('洗衣精','洗衣清潔','laundry',2,'瓶',1,'常用：藍色那罐');
   const b=mk('衛生紙','紙品耗材','tp',1,'串',1,'Costco 買比較划算');
   const c=mk('洗髮精','浴室用品','pump',1,'瓶',1);
-  const d=mk('維他命C','保健食品','vitamin',0,'罐',1,'',addDays(20));
-  const e=mk('洗面乳','身體保養','tube',3,'條',1);
-  const f=mk('洗碗精','廚房用品','soap',1,'瓶',1);
+  const d=mk('維他命C','保健食品','capsule',0,'罐',1,'',addDays(20));
+  const e=mk('洗面乳','身體保養','jar',3,'條',1);
+  const f=mk('洗碗精','廚房用品','kitchen',1,'瓶',1);
   state.items=[a,b,c,d,e,f];
   state.purchases=[
     {id:uid(),itemId:a.id,purchaseDate:todayStr(),quantity:2,unit:'瓶',note:'Costco',createdBy:'我',createdAt:nowISO()},
@@ -783,7 +768,7 @@ function cardHTML(it){
   const last=lastPurchase(it.id);
   return `<div class="item-card" onclick="openDetail('${it.id}')">
     <div class="ic-row">
-      <div class="ic-icon">${iconSvg(it.icon)}</div>
+      <div class="ic-icon">${iconSvg(catMeta(it.category).icon)}</div>
       <div class="ic-body">
         <div class="ic-name">${esc(it.name)}</div>
         <div class="ic-sub">${esc(it.category)}・最近購買 ${last?fmtDate(last.purchaseDate):'—'}</div>
@@ -823,20 +808,17 @@ function filterByCat(c){
 }
 
 /* ================= add / edit form ================= */
-let fCat='洗衣清潔', fIcon='bottle';
+let fCat='洗衣清潔';
 function buildFormStatics(){
   $('fCatChips').innerHTML=CAT_NAMES.map(c=>{
     const m=CATS[c];
     return `<button type="button" class="cat-chip ${fCat===c?'active':''}" data-cat="${c}" onclick="pickCat('${c}')">${iconSvg(m.icon)}${c}</button>`;
   }).join('');
-  $('fIconGrid').innerHTML=Object.keys(ICONS).map(k=>
-    `<button type="button" class="icon-cell ${fIcon===k?'active':''}" data-icon="${k}" onclick="pickIcon('${k}')">${iconSvg(k)}</button>`).join('');
 }
-function pickCat(c){fCat=c;if(!editingId)fIcon=CATS[c].icon;buildFormStatics();}
-function pickIcon(k){fIcon=k;buildFormStatics();}
+function pickCat(c){fCat=c;buildFormStatics();}
 function stepQty(id,d){const el=$(id);el.value=Math.max(0,(parseInt(el.value)||0)+d);}
 function resetItemForm(){
-  editingId=null;fCat='洗衣清潔';fIcon='bottle';
+  editingId=null;fCat='洗衣清潔';
   $('formTitle').textContent='新增備品';$('fSubmit').textContent='加入備品清單';
   $('fCancelEdit').classList.add('hide');$('fQtyLabel').textContent='初始數量';
   $('fQty').parentElement.parentElement.classList.remove('hide');
@@ -847,7 +829,7 @@ function resetItemForm(){
 function startEdit(id){
   const it=state.items.find(i=>i.id===id);if(!it)return;
   closeDetail();
-  editingId=id;fCat=it.category;fIcon=it.icon;
+  editingId=id;fCat=it.category;
   go('add');
   $('formTitle').textContent='編輯備品';$('fSubmit').textContent='儲存變更';
   $('fCancelEdit').classList.remove('hide');
@@ -862,7 +844,7 @@ async function submitItemForm(){
   const name=$('fName').value.trim();
   if(!name){toast('請填寫品名');$('fName').focus();return;}
   const d={
-    name,category:fCat,icon:fIcon,
+    name,category:fCat,icon:CATS[fCat].icon,
     currentQuantity:Math.max(0,parseInt($('fQty').value)||0),
     unit:$('fUnit').value.trim()||'個',
     lowStockThreshold:Math.max(0,parseInt($('fLow').value)||0),
@@ -983,7 +965,7 @@ function renderDetail(){
     :uses.map(r=>`<tr><td>${fmtDate(r.usedDate)}</td><td><b>−${r.quantity}</b> ${esc(r.unit||it.unit)}</td><td class="n">${esc(r.note||'—')}</td><td class="n">${esc(r.createdBy||'')}</td></tr>`).join('');
   $('detailBody').innerHTML=`
     <div class="dt-head">
-      <div class="dt-icon" style="background:${m.bg};color:${m.c}">${iconSvg(it.icon)}</div>
+      <div class="dt-icon" style="background:${m.bg};color:${m.c}">${iconSvg(m.icon)}</div>
       <div><div class="dt-name">${esc(it.name)}</div><div class="dt-cat">${esc(it.category)} ${STATUS_BADGE[st]}</div></div>
       <div class="dt-tools">
         <button class="tool-btn" onclick="startEdit('${it.id}')" aria-label="編輯"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17Z"/><path d="m13.5 6.5 3 3"/></svg></button>
@@ -1024,7 +1006,7 @@ function renderRecords(){
     const m=catMeta(it?it.category:'其他');
     if(r._d!==lastD){lastD=r._d;html+=`<div class="rec-date-h">${fmtDate(r._d)}</div>`;}
     html+=`<div class="rec-item" ${it?`onclick="openDetail('${it.id}')"`:''}>
-      <div class="ri-icon" style="background:${m.bg};color:${m.c}">${iconSvg(it?it.icon:'box')}</div>
+      <div class="ri-icon" style="background:${m.bg};color:${m.c}">${iconSvg(m.icon)}</div>
       <div class="ri-body"><div class="ri-name">${esc(it?it.name:'（已刪除的品項）')}</div>
       <div class="ri-sub">${esc(r.createdBy||'')}${r.note?'・'+esc(r.note):''}</div></div>
       <div class="ri-qty ${isBuy?'plus':'minus'}">${isBuy?'+':'−'}${r.quantity} ${esc(r.unit||(it?it.unit:''))}</div></div>`;
